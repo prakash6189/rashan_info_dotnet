@@ -29,5 +29,22 @@ namespace Rashan_Form
             
             
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            string displayAreaCode = cmbDisplayAreaCode.SelectedText;
+            string regNo = txtRegistrationNo.Text;
+            string sNo = cmbSerialNo.SelectedText;
+            string aadharNo = txtAadharNo.Text;
+            string uNo = txtUNo.Text;
+            string name = txtName.Text;
+
+            if(displayAreaCode==""||regNo==""||sNo==""||aadharNo==""||uNo=="")
+            {
+                label1.Text = "please fill all details with * (i.e,mandatory) sign before clicking Add";
+                label1.ForeColor = Color.Red;
+
+            }
+        }
     }
 }
