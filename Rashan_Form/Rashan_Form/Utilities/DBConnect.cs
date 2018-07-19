@@ -95,8 +95,15 @@ namespace ConnectCsharpToMysql
                 //create command and assign the query and connection from the constructor
                 MySqlCommand cmd = new MySqlCommand(insertQuery, connection);
 
-                //Execute command
-                insertFlag = cmd.ExecuteNonQuery()>0 ? true : false;
+                try
+                {
+                    //Execute command
+                    insertFlag = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+                catch(MySqlException msex)
+                {
+                    insertFlag = false;
+                }
 
                 //close connection
                 this.CloseConnection();
