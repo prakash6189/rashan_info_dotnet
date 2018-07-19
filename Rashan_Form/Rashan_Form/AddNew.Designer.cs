@@ -41,7 +41,7 @@
             this.txtUNo = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -85,7 +85,7 @@
             // lblAadharNo
             // 
             this.lblAadharNo.AutoSize = true;
-            this.lblAadharNo.Location = new System.Drawing.Point(45, 138);
+            this.lblAadharNo.Location = new System.Drawing.Point(42, 138);
             this.lblAadharNo.Name = "lblAadharNo";
             this.lblAadharNo.Size = new System.Drawing.Size(65, 13);
             this.lblAadharNo.TabIndex = 4;
@@ -94,7 +94,7 @@
             // lblUNo
             // 
             this.lblUNo.AutoSize = true;
-            this.lblUNo.Location = new System.Drawing.Point(48, 173);
+            this.lblUNo.Location = new System.Drawing.Point(42, 173);
             this.lblUNo.Name = "lblUNo";
             this.lblUNo.Size = new System.Drawing.Size(39, 13);
             this.lblUNo.TabIndex = 5;
@@ -151,7 +151,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(48, 208);
+            this.lblName.Location = new System.Drawing.Point(42, 208);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 11;
@@ -164,21 +164,23 @@
             this.txtName.Size = new System.Drawing.Size(100, 20);
             this.txtName.TabIndex = 12;
             // 
-            // label1
+            // lblError
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(48, 252);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "label1";
+            this.lblError.AutoSize = true;
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(48, 252);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(292, 13);
+            this.lblError.TabIndex = 13;
+            this.lblError.Text = "Fill All Details With * (i.e,mandatory) Sign Before Clicking Add";
+            this.lblError.Visible = false;
             // 
             // AddNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(352, 315);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(378, 315);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.txtUNo);
@@ -192,6 +194,7 @@
             this.Controls.Add(this.lblRegistrationNo);
             this.Controls.Add(this.lblDisplayAreaCode);
             this.Controls.Add(this.btnAdd);
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "AddNew";
             this.Text = "Add New";
             this.Load += new System.EventHandler(this.AddNew_Load);
@@ -215,6 +218,6 @@
         private System.Windows.Forms.TextBox txtUNo;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblError;
     }
 }

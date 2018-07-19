@@ -34,7 +34,6 @@ namespace ConnectCsharpToMysql
             password = "loser00@mysql";
             string connectionString;
             connectionString = "Server=" + server + ";" + "Port=" + port + ";" + "Database=" + database + ";" + "Uid=" + uid + ";" + "Pwd=" + password + ";SslMode=none;";
-            MessageBox.Show(connectionString);
 
             connection = new MySqlConnection(connectionString);
         }
@@ -85,8 +84,9 @@ namespace ConnectCsharpToMysql
         }
 
         //Insert statement
-        public void Insert(string insertQuery)
+        public bool Insert(string insertQuery)
         {
+            bool insertFlag = false;
             //string query = "INSERT INTO tableinfo (name, age) VALUES('John Smith', '33')";
 
             //open connection
@@ -96,11 +96,13 @@ namespace ConnectCsharpToMysql
                 MySqlCommand cmd = new MySqlCommand(insertQuery, connection);
 
                 //Execute command
-                cmd.ExecuteNonQuery();
+                insertFlag = cmd.ExecuteNonQuery()>0 ? true : false;
 
                 //close connection
                 this.CloseConnection();
             }
+            return insertFlag;
+
         }
 
         //Update statement
