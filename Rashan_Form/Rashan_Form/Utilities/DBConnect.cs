@@ -11,7 +11,7 @@ namespace ConnectCsharpToMysql
 {
     class DBConnect
     {
-        private MySqlConnection connection;
+        public MySqlConnection connection;
         private string server;
         private string database;
         private string uid;
@@ -101,6 +101,33 @@ namespace ConnectCsharpToMysql
                     insertFlag = cmd.ExecuteNonQuery() > 0 ? true : false;
                 }
                 catch(MySqlException msex)
+                {
+                    insertFlag = false;
+                }
+
+                //close connection
+                this.CloseConnection();
+            }
+            return insertFlag;
+
+        }
+
+        public bool Insert(MySqlCommand cmd)
+        {
+            bool insertFlag = false;
+            //string query = "INSERT INTO tableinfo (name, age) VALUES('John Smith', '33')";
+
+            //open connection
+            if (this.OpenConnection())
+            {
+                //create command and assign the query and connection from the constructor
+
+                try
+                {
+                    //Execute command
+                    insertFlag = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+                catch (MySqlException msex)
                 {
                     insertFlag = false;
                 }

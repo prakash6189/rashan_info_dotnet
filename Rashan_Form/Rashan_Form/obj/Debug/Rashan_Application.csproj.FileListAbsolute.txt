@@ -11,3 +11,7 @@ E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\obj
 E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\obj\Debug\Rashan_Form.exe
 E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\obj\Debug\Rashan_Form.pdb
 E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\obj\Debug\Rashan_Form.AddNew.resources
+E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\bin\Debug\Rashan_Form.exe.manifest
+E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\bin\Debug\Rashan_Form.application
+E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\obj\Debug\Rashan_Form.exe.manifest
+E:\rashan_info_pro_dotnet_kashyap\rashan_info_dotnet\Rashan_Form\Rashan_Form\obj\Debug\Rashan_Form.application
