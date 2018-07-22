@@ -28,8 +28,7 @@ namespace Rashan_Form
             this.aadharNo = aadharNo;
             this.dbConnect = new DBConnect();
             this.Text = this.aadharNo + " Add Fingerprint";
-            this.CenterToScreen();
-            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM rashan_information.fingerprint_data_information limit 10", "Fingerprint_Code");
+            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 10", "Fingerprint_Code");
 
             button1.Text = "Capture (" + fingerprintCodeList[0].ToString().ToUpper() + ")";
             button2.Text = "Capture (" + fingerprintCodeList[1].ToString().ToUpper() + ")";

@@ -28,7 +28,7 @@ namespace ConnectCsharpToMysql
         private void Initialize()
         {
             server = "103.69.33.229";
-            database = "rashan_information";
+            database = "productiondb";
             port = 3306;
             uid = "prakash";
             password = "loser00mysql";
@@ -112,38 +112,12 @@ namespace ConnectCsharpToMysql
 
         }
 
-        public bool Insert(MySqlCommand cmd)
-        {
-            bool insertFlag = false;
-            //string query = "INSERT INTO tableinfo (name, age) VALUES('John Smith', '33')";
-
-            //open connection
-            if (this.OpenConnection())
-            {
-                //create command and assign the query and connection from the constructor
-
-                try
-                {
-                    //Execute command
-                    insertFlag = cmd.ExecuteNonQuery() > 0 ? true : false;
-                }
-                catch (MySqlException msex)
-                {
-                    insertFlag = false;
-                }
-
-                //close connection
-                this.CloseConnection();
-            }
-            return insertFlag;
-
-        }
-
         //Update statement
-        public void Update(string updateQuery)
+        public bool Update(string updateQuery)
         {
             //string query = "UPDATE tableinfo SET name='Joe', age='22' WHERE name='John Smith'";
 
+            bool updateFlag = false;
             //Open connection
             if (this.OpenConnection())
             {
@@ -155,11 +129,20 @@ namespace ConnectCsharpToMysql
                 cmd.Connection = connection;
 
                 //Execute query
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    //Execute command
+                    updateFlag = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+                catch (MySqlException msex)
+                {
+                    updateFlag = false;
+                }
 
                 //close connection
                 this.CloseConnection();
             }
+            return updateFlag;
         }
 
         //Delete statement

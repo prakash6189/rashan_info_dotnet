@@ -96,9 +96,9 @@
             this.lblUNo.AutoSize = true;
             this.lblUNo.Location = new System.Drawing.Point(42, 173);
             this.lblUNo.Name = "lblUNo";
-            this.lblUNo.Size = new System.Drawing.Size(39, 13);
+            this.lblUNo.Size = new System.Drawing.Size(34, 13);
             this.lblUNo.TabIndex = 5;
-            this.lblUNo.Text = "U No.*";
+            this.lblUNo.Text = "U Id.*";
             // 
             // cmbDisplayAreaCode
             // 

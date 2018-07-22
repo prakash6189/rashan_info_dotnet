@@ -17,29 +17,34 @@ namespace Rashan_Form
 {
     public partial class AddNew : Form
     {
-        private string macAddress;
+        private string passcode;
         private DBConnect dbConnect;
-        public AddNew(string macAddress)
+        public AddNew(string passcode)
         {
             InitializeComponent();
             this.dbConnect = new DBConnect();
-            this.macAddress = macAddress;
+            this.passcode = passcode;
         }
 
 
 
         private void AddNew_Load(object sender, EventArgs e)
         {
-            string macActiveQuery = "SELECT IsActive FROM rashan_information.mac_information where Mac_Address='" + this.macAddress + "'";
+            
+            string macActiveQuery = "SELECT IsActive FROM passcode_information where Passcode='" + this.passcode + "'";
             object activeFlag = this.dbConnect.SelectSingleColumn(macActiveQuery, "IsActive")[0];
 
             if (activeFlag.ToString() == "True")
             {
-                string selectDisplayAreaForMacQuery = "SELECT Display_Area_Code FROM mac_display_mapping WHERE Mac_Address='" + this.macAddress + "'";
+                string selectDisplayAreaForMacQuery = "SELECT Display_Area_Code FROM passcode_display_mapping WHERE Passcode='" + this.passcode + "'";
                 object[] displayAreaCodeList = this.dbConnect.SelectSingleColumn(selectDisplayAreaForMacQuery, "Display_Area_Code").ToArray();
 
                 if (displayAreaCodeList.Length > 0)
+                {
                     cmbDisplayAreaCode.Items.AddRange(displayAreaCodeList);
+                    cmbSerialNo.SelectedIndex = 0;
+                    cmbDisplayAreaCode.SelectedIndex = 0;
+                }
                 else
                 {
                     MessageBox.Show("There was some error connecting to server or your mac is not registered");
@@ -75,9 +80,9 @@ namespace Rashan_Form
             else
             {
 
-                string macDisplayIdSelectQuery = string.Format("select Mac_Display_Id from mac_display_mapping where Mac_Address='{0}' and Display_Area_Code='{1}'", this.macAddress, displayAreaCode);
-                string macDisplayId = this.dbConnect.SelectSingleColumn(macDisplayIdSelectQuery, "Mac_Display_Id").ElementAt(0).ToString();
-                string insertUserInformationQuery = string.Format("insert into user_information values('{0}','{1}','{2}','{3}','{4}','{5}')", aadharNo, macDisplayId, regNo, sNo, uNo, name);
+                string passcodeDisplayIdSelectQuery = string.Format("select Passcode_Display_Id from passcode_display_mapping where Passcode='{0}' and Display_Area_Code='{1}'", this.passcode, displayAreaCode);
+                string passcodeDisplayId = this.dbConnect.SelectSingleColumn(passcodeDisplayIdSelectQuery, "Passcode_Display_Id").ElementAt(0).ToString();
+                string insertUserInformationQuery = string.Format("insert into user_information values('{0}','{1}','{2}','{3}','{4}','{5}')", aadharNo, passcodeDisplayId, regNo, sNo, uNo, name);
 
                 bool insertFlag = dbConnect.Insert(insertUserInformationQuery);
                 if (insertFlag)
