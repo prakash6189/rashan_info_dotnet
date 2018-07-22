@@ -103,6 +103,7 @@
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 5;
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
@@ -112,6 +113,7 @@
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 6;
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
@@ -121,6 +123,7 @@
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 7;
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
@@ -130,6 +133,7 @@
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 8;
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
@@ -139,6 +143,7 @@
             this.button10.Size = new System.Drawing.Size(75, 23);
             this.button10.TabIndex = 9;
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Visible = false;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label1
@@ -194,6 +199,7 @@
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "label6";
+            this.label6.Visible = false;
             // 
             // label7
             // 
@@ -203,6 +209,7 @@
             this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 16;
             this.label7.Text = "label7";
+            this.label7.Visible = false;
             // 
             // label8
             // 
@@ -212,6 +219,7 @@
             this.label8.Size = new System.Drawing.Size(35, 13);
             this.label8.TabIndex = 17;
             this.label8.Text = "label8";
+            this.label8.Visible = false;
             // 
             // label9
             // 
@@ -221,6 +229,7 @@
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 18;
             this.label9.Text = "label9";
+            this.label9.Visible = false;
             // 
             // label10
             // 
@@ -230,12 +239,14 @@
             this.label10.Size = new System.Drawing.Size(41, 13);
             this.label10.TabIndex = 19;
             this.label10.Text = "label10";
+            this.label10.Visible = false;
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(94, 411);
+            this.btnDone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDone.Location = new System.Drawing.Point(95, 212);
             this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(75, 23);
+            this.btnDone.Size = new System.Drawing.Size(75, 33);
             this.btnDone.TabIndex = 20;
             this.btnDone.Text = "Done";
             this.btnDone.UseVisualStyleBackColor = true;
@@ -245,7 +256,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 457);
+            this.ClientSize = new System.Drawing.Size(287, 250);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -267,6 +278,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FingerprintData";
             this.Text = "FingerprintData";
             this.Load += new System.EventHandler(this.FingerprintData_Load);

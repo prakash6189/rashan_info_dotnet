@@ -33,12 +33,10 @@
             this.lblRegistrationNo = new System.Windows.Forms.Label();
             this.lblSerialNo = new System.Windows.Forms.Label();
             this.lblAadharNo = new System.Windows.Forms.Label();
-            this.lblUNo = new System.Windows.Forms.Label();
             this.cmbDisplayAreaCode = new System.Windows.Forms.ComboBox();
             this.txtRegistrationNo = new System.Windows.Forms.TextBox();
             this.txtAadharNo = new System.Windows.Forms.TextBox();
             this.cmbSerialNo = new System.Windows.Forms.ComboBox();
-            this.txtUNo = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblError = new System.Windows.Forms.Label();
@@ -47,10 +45,11 @@
             // btnAdd
             // 
             this.btnAdd.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnAdd.Location = new System.Drawing.Point(128, 280);
+            this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.Location = new System.Drawing.Point(130, 251);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Size = new System.Drawing.Size(75, 40);
+            this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -61,7 +60,7 @@
             this.lblDisplayAreaCode.Location = new System.Drawing.Point(42, 33);
             this.lblDisplayAreaCode.Name = "lblDisplayAreaCode";
             this.lblDisplayAreaCode.Size = new System.Drawing.Size(98, 13);
-            this.lblDisplayAreaCode.TabIndex = 1;
+            this.lblDisplayAreaCode.TabIndex = 0;
             this.lblDisplayAreaCode.Text = "Display Area Code*";
             // 
             // lblRegistrationNo
@@ -70,7 +69,7 @@
             this.lblRegistrationNo.Location = new System.Drawing.Point(42, 68);
             this.lblRegistrationNo.Name = "lblRegistrationNo";
             this.lblRegistrationNo.Size = new System.Drawing.Size(87, 13);
-            this.lblRegistrationNo.TabIndex = 2;
+            this.lblRegistrationNo.TabIndex = 0;
             this.lblRegistrationNo.Text = "Registration No.*";
             // 
             // lblSerialNo
@@ -79,7 +78,7 @@
             this.lblSerialNo.Location = new System.Drawing.Point(42, 103);
             this.lblSerialNo.Name = "lblSerialNo";
             this.lblSerialNo.Size = new System.Drawing.Size(57, 13);
-            this.lblSerialNo.TabIndex = 3;
+            this.lblSerialNo.TabIndex = 0;
             this.lblSerialNo.Text = "Serial No.*";
             // 
             // lblAadharNo
@@ -88,17 +87,8 @@
             this.lblAadharNo.Location = new System.Drawing.Point(42, 138);
             this.lblAadharNo.Name = "lblAadharNo";
             this.lblAadharNo.Size = new System.Drawing.Size(65, 13);
-            this.lblAadharNo.TabIndex = 4;
+            this.lblAadharNo.TabIndex = 0;
             this.lblAadharNo.Text = "Aadhar No.*";
-            // 
-            // lblUNo
-            // 
-            this.lblUNo.AutoSize = true;
-            this.lblUNo.Location = new System.Drawing.Point(42, 173);
-            this.lblUNo.Name = "lblUNo";
-            this.lblUNo.Size = new System.Drawing.Size(34, 13);
-            this.lblUNo.TabIndex = 5;
-            this.lblUNo.Text = "U Id.*";
             // 
             // cmbDisplayAreaCode
             // 
@@ -106,21 +96,21 @@
             this.cmbDisplayAreaCode.Location = new System.Drawing.Point(178, 33);
             this.cmbDisplayAreaCode.Name = "cmbDisplayAreaCode";
             this.cmbDisplayAreaCode.Size = new System.Drawing.Size(121, 21);
-            this.cmbDisplayAreaCode.TabIndex = 6;
+            this.cmbDisplayAreaCode.TabIndex = 1;
             // 
             // txtRegistrationNo
             // 
             this.txtRegistrationNo.Location = new System.Drawing.Point(178, 68);
             this.txtRegistrationNo.Name = "txtRegistrationNo";
             this.txtRegistrationNo.Size = new System.Drawing.Size(100, 20);
-            this.txtRegistrationNo.TabIndex = 7;
+            this.txtRegistrationNo.TabIndex = 2;
             // 
             // txtAadharNo
             // 
             this.txtAadharNo.Location = new System.Drawing.Point(178, 138);
             this.txtAadharNo.Name = "txtAadharNo";
             this.txtAadharNo.Size = new System.Drawing.Size(100, 20);
-            this.txtAadharNo.TabIndex = 8;
+            this.txtAadharNo.TabIndex = 4;
             // 
             // cmbSerialNo
             // 
@@ -139,36 +129,29 @@
             this.cmbSerialNo.Location = new System.Drawing.Point(178, 103);
             this.cmbSerialNo.Name = "cmbSerialNo";
             this.cmbSerialNo.Size = new System.Drawing.Size(121, 21);
-            this.cmbSerialNo.TabIndex = 9;
-            // 
-            // txtUNo
-            // 
-            this.txtUNo.Location = new System.Drawing.Point(178, 173);
-            this.txtUNo.Name = "txtUNo";
-            this.txtUNo.Size = new System.Drawing.Size(100, 20);
-            this.txtUNo.TabIndex = 10;
+            this.cmbSerialNo.TabIndex = 3;
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(42, 208);
+            this.lblName.Location = new System.Drawing.Point(42, 173);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(35, 13);
-            this.lblName.TabIndex = 11;
+            this.lblName.TabIndex = 0;
             this.lblName.Text = "Name";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(178, 208);
+            this.txtName.Location = new System.Drawing.Point(178, 173);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(100, 20);
-            this.txtName.TabIndex = 12;
+            this.txtName.TabIndex = 5;
             // 
             // lblError
             // 
             this.lblError.AutoSize = true;
             this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(48, 252);
+            this.lblError.Location = new System.Drawing.Point(42, 222);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(292, 13);
             this.lblError.TabIndex = 13;
@@ -183,12 +166,10 @@
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
-            this.Controls.Add(this.txtUNo);
             this.Controls.Add(this.cmbSerialNo);
             this.Controls.Add(this.txtAadharNo);
             this.Controls.Add(this.txtRegistrationNo);
             this.Controls.Add(this.cmbDisplayAreaCode);
-            this.Controls.Add(this.lblUNo);
             this.Controls.Add(this.lblAadharNo);
             this.Controls.Add(this.lblSerialNo);
             this.Controls.Add(this.lblRegistrationNo);
@@ -210,12 +191,10 @@
         private System.Windows.Forms.Label lblRegistrationNo;
         private System.Windows.Forms.Label lblSerialNo;
         private System.Windows.Forms.Label lblAadharNo;
-        private System.Windows.Forms.Label lblUNo;
         private System.Windows.Forms.ComboBox cmbDisplayAreaCode;
         private System.Windows.Forms.TextBox txtRegistrationNo;
         private System.Windows.Forms.TextBox txtAadharNo;
         private System.Windows.Forms.ComboBox cmbSerialNo;
-        private System.Windows.Forms.TextBox txtUNo;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblError;

@@ -69,11 +69,11 @@ namespace Rashan_Form
             string regNo = txtRegistrationNo.Text;
             string sNo = cmbSerialNo.SelectedItem?.ToString() ?? "";
             string aadharNo = txtAadharNo.Text;
-            string uNo = txtUNo.Text;
+            
             string name = txtName.Text;
 
 
-            if (displayAreaCode == "" || regNo == "" || sNo == "" || aadharNo == "" || uNo == "")
+            if (displayAreaCode == "" || regNo == "" || sNo == "" || aadharNo == "")
             {
                 lblError.Visible = true;
             }
@@ -82,7 +82,7 @@ namespace Rashan_Form
 
                 string passcodeDisplayIdSelectQuery = string.Format("select Passcode_Display_Id from passcode_display_mapping where Passcode='{0}' and Display_Area_Code='{1}'", this.passcode, displayAreaCode);
                 string passcodeDisplayId = this.dbConnect.SelectSingleColumn(passcodeDisplayIdSelectQuery, "Passcode_Display_Id").ElementAt(0).ToString();
-                string insertUserInformationQuery = string.Format("insert into user_information values('{0}','{1}','{2}','{3}','{4}','{5}')", aadharNo, passcodeDisplayId, regNo, sNo, uNo, name);
+                string insertUserInformationQuery = string.Format("insert into user_information values('{0}','{1}','{2}','{3}','{4}')", aadharNo, passcodeDisplayId, regNo, sNo, name);
 
                 bool insertFlag = dbConnect.Insert(insertUserInformationQuery);
                 if (insertFlag)
