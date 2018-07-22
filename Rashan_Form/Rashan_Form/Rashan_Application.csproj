@@ -81,6 +81,12 @@
     <Compile Include="AddNew.Designer.cs">
       <DependentUpon>AddNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="Add Fingerprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Add Fingerprint.Designer.cs">
+      <DependentUpon>Add Fingerprint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     <Compile Include="Utilities\GenericUtils.cs" />
     <EmbeddedResource Include="AddNew.resx">
       <DependentUpon>AddNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Add Fingerprint.resx">
+      <DependentUpon>Add Fingerprint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

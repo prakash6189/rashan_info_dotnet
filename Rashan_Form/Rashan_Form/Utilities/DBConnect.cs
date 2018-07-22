@@ -27,11 +27,11 @@ namespace ConnectCsharpToMysql
         //Initialize values
         private void Initialize()
         {
-            server = "localhost";
+            server = "103.69.33.229";
             database = "rashan_information";
             port = 3306;
-            uid = "root";
-            password = "loser00@mysql";
+            uid = "prakash";
+            password = "loser00mysql";
             string connectionString;
             connectionString = "Server=" + server + ";" + "Port=" + port + ";" + "Database=" + database + ";" + "Uid=" + uid + ";" + "Pwd=" + password + ";SslMode=none;";
 

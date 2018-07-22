@@ -14,16 +14,22 @@ namespace Rashan_Form
     public partial class Home : Form
     {
 
-        private string macAddress=GenericUtils.GetMACAddress();
+        private string macAddress;
         public Home()
         {
             InitializeComponent();
+            this.macAddress = GenericUtils.GetMACAddress(); 
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
         {
             AddNew formAddNew = new AddNew(macAddress);
             formAddNew.ShowDialog();
+        }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+            MessageBox.Show(this.macAddress);
         }
     }
 }
