@@ -92,6 +92,7 @@
             // 
             // cmbDisplayAreaCode
             // 
+            this.cmbDisplayAreaCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDisplayAreaCode.FormattingEnabled = true;
             this.cmbDisplayAreaCode.Location = new System.Drawing.Point(178, 33);
             this.cmbDisplayAreaCode.Name = "cmbDisplayAreaCode";
@@ -114,6 +115,7 @@
             // 
             // cmbSerialNo
             // 
+            this.cmbSerialNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSerialNo.FormattingEnabled = true;
             this.cmbSerialNo.Items.AddRange(new object[] {
             "1",

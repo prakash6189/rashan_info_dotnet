@@ -19,44 +19,22 @@ namespace Rashan_Form
     {
         private string passcode;
         private DBConnect dbConnect;
-        public AddNew(string passcode)
+        private object[] displayAreaCodeList;
+        public AddNew(string passcode, object[] displayAreaCodeList)
         {
             InitializeComponent();
             this.dbConnect = new DBConnect();
-            this.passcode = passcode;
+            this.displayAreaCodeList = displayAreaCodeList;
         }
-
-
 
         private void AddNew_Load(object sender, EventArgs e)
         {
-            
-            string macActiveQuery = "SELECT IsActive FROM passcode_information where Passcode='" + this.passcode + "'";
-            object activeFlag = this.dbConnect.SelectSingleColumn(macActiveQuery, "IsActive")[0];
-
-            if (activeFlag.ToString() == "True")
+            if (displayAreaCodeList.Length > 0)
             {
-                string selectDisplayAreaForMacQuery = "SELECT Display_Area_Code FROM passcode_display_mapping WHERE Passcode='" + this.passcode + "'";
-                object[] displayAreaCodeList = this.dbConnect.SelectSingleColumn(selectDisplayAreaForMacQuery, "Display_Area_Code").ToArray();
-
-                if (displayAreaCodeList.Length > 0)
-                {
-                    cmbDisplayAreaCode.Items.AddRange(displayAreaCodeList);
-                    cmbSerialNo.SelectedIndex = 0;
-                    cmbDisplayAreaCode.SelectedIndex = 0;
-                }
-                else
-                {
-                    MessageBox.Show("There was some error connecting to server or your mac is not registered");
-                    this.Close();
-                }
+                cmbDisplayAreaCode.Items.AddRange(displayAreaCodeList);
+                cmbSerialNo.SelectedIndex = 0;
+                cmbDisplayAreaCode.SelectedIndex = 0;
             }
-            else
-            {
-                MessageBox.Show("Your mac address is not registered or is not active\n Please register your mac address");
-                this.Close();
-            }
-
 
         }
 
@@ -69,7 +47,7 @@ namespace Rashan_Form
             string regNo = txtRegistrationNo.Text;
             string sNo = cmbSerialNo.SelectedItem?.ToString() ?? "";
             string aadharNo = txtAadharNo.Text;
-            
+
             string name = txtName.Text;
 
 
