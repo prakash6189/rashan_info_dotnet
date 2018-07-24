@@ -34,7 +34,7 @@
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(12, 12);
+            this.btnAddNew.Location = new System.Drawing.Point(197, 80);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(75, 30);
             this.btnAddNew.TabIndex = 0;
