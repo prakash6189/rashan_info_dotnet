@@ -84,6 +84,8 @@
             this.Controls.Add(this.txtPasscode);
             this.Controls.Add(this.lblPasscode);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Registration";
             this.Text = "Registration";
             this.ResumeLayout(false);

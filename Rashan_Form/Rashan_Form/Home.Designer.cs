@@ -59,9 +59,10 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnAddNew);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Home";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Home_Load);
             this.ResumeLayout(false);
 
         }

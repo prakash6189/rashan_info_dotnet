@@ -91,10 +91,15 @@ namespace Rashan_Form
                     DialogResult fingerprintDialog = MessageBox.Show("Record saved successfully\nDo you wish to capture fingerprint", "Fingerprint", MessageBoxButtons.YesNo);
                     if (fingerprintDialog == DialogResult.Yes)
                     {
+                        Process mfs100 = Process.Start(@"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\Mantra.MFS100.Test.exe");
+                        this.Hide();
                         FingerprintData fpdForm = new FingerprintData(aadharNo);
-                        fpdForm.Show();
-
+                        fpdForm.ShowDialog();
                         this.Close();
+                        mfs100.Kill();
+                        mfs100.WaitForExit();
+                        mfs100.Dispose();
+
                     }
                     else
                     {

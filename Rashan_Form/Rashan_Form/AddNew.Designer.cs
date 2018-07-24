@@ -176,6 +176,9 @@
             this.Controls.Add(this.lblDisplayAreaCode);
             this.Controls.Add(this.btnAdd);
             this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AddNew";
             this.Text = "Add New";
             this.Load += new System.EventHandler(this.AddNew_Load);

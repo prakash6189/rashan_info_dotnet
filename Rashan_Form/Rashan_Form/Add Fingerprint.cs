@@ -24,7 +24,7 @@ namespace Rashan_Form
         public FingerprintData(string aadharNo)
         {
             InitializeComponent();
-            
+
             this.aadharNo = aadharNo;
             this.dbConnect = new DBConnect();
             this.Text = this.aadharNo + " Add Fingerprint";
@@ -62,9 +62,8 @@ namespace Rashan_Form
 
         private void FingerprintData_Load(object sender, EventArgs e)
         {
-            Process mfs100 = Process.Start(@"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\Mantra.MFS100.Test.exe");
+            
             label1.Text = label2.Text = label3.Text = label4.Text = label5.Text = label6.Text = label7.Text = label9.Text = label8.Text = label10.Text = "";
-
         }
 
 

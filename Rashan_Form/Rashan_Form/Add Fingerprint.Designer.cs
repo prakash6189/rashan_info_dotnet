@@ -279,6 +279,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FingerprintData";
             this.Text = "FingerprintData";
             this.Load += new System.EventHandler(this.FingerprintData_Load);

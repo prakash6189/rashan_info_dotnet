@@ -28,7 +28,7 @@ namespace ConnectCsharpToMysql
         private void Initialize()
         {
             server = "103.69.33.229";
-            database = "productiondb";
+            database = "productionDB";
             port = 3306;
             uid = "prakash";
             password = "loser00mysql";
