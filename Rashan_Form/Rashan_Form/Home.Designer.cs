@@ -43,8 +43,12 @@
             // 
             // btnAddNew
             // 
+<<<<<<< HEAD
             this.btnAddNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddNew.Location = new System.Drawing.Point(160, 189);
+=======
+            this.btnAddNew.Location = new System.Drawing.Point(197, 80);
+>>>>>>> dfe7e488c85c5e02a45336eb85477476682f639c
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(75, 66);
             this.btnAddNew.TabIndex = 0;
