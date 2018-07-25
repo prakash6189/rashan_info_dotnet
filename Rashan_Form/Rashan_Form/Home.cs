@@ -17,17 +17,17 @@ namespace Rashan_Form
         private string passcode;
         private DBConnect dbConnect;
         private object[] displayAreaCodeList;
-
+        private List<object> fingerprintCodeList;
         public Home(string passcode)
         {
             InitializeComponent();
             this.passcode = passcode;
             this.dbConnect = new DBConnect();
-
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
+            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 10", "Fingerprint_Code");
             rbtnAadharNo.Checked = false;
             txtAadharNo.Enabled = false;
             rbtnRegNo.Checked = true;
@@ -61,7 +61,7 @@ namespace Rashan_Form
         }
         private void btnAddNew_Click(object sender, EventArgs e)
         {
-            AddNew formAddNew = new AddNew(this.passcode, displayAreaCodeList);
+            AddNew formAddNew = new AddNew(this.passcode, this.displayAreaCodeList, this.fingerprintCodeList);
             formAddNew.ShowDialog();
         }
 
@@ -83,11 +83,40 @@ namespace Rashan_Form
             {
                 if (regNo == "")
                     MessageBox.Show("Registration No cannot be empty");
+                else
+                {
+                    string fetchQuery = "select a.Aadhar_No from user_information a,"
+  + "(select Passcode_Display_Id FROM passcode_display_mapping where Passcode = '" + this.passcode + "' and Display_Area_Code = '" + displayAreaCode + "') b "
+      + "where a.Passcode_Display_Id = b.Passcode_Display_Id "
++ "and a.Registration_No = '" + regNo + "' and a.Serial_No = '" + sNo + "'";
+
+                    try
+                    {
+                        MessageBox.Show(aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString());
+                    }
+                    catch (ArgumentOutOfRangeException ex) { MessageBox.Show("Record not found"); }
+
+                }
+
+
             }
             else if (displayAreaCode != "" && rbtnAadharNo.Checked)
             {
                 if (aadharNo == "")
                     MessageBox.Show("Aadhar No cannot be empty");
+                else
+                {
+                    string fetchQuery = "select a.Aadhar_No from user_information a,"
+ + "(select Passcode_Display_Id FROM passcode_display_mapping where Passcode = '" + this.passcode + "' and Display_Area_Code = '" + displayAreaCode + "') b "
+     + "where a.Passcode_Display_Id = b.Passcode_Display_Id "
++ "and a.Aadhar_No = '" + aadharNo + "'";
+
+                    try
+                    {
+                        MessageBox.Show(aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString());
+                    }
+                    catch (ArgumentOutOfRangeException ex) { MessageBox.Show("Record not found"); }
+                }
             }
         }
 

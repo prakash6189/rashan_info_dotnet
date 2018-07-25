@@ -20,11 +20,13 @@ namespace Rashan_Form
         private string passcode;
         private DBConnect dbConnect;
         private object[] displayAreaCodeList;
-        public AddNew(string passcode, object[] displayAreaCodeList)
+        private List<object> fingerprintCodeList;
+        public AddNew(string passcode, object[] displayAreaCodeList,List<object> fingerprintCodeList)
         {
             InitializeComponent();
             this.dbConnect = new DBConnect();
             this.displayAreaCodeList = displayAreaCodeList;
+            this.fingerprintCodeList = fingerprintCodeList;
         }
 
         private void AddNew_Load(object sender, EventArgs e)
@@ -71,7 +73,7 @@ namespace Rashan_Form
                     {
                         Process mfs100 = Process.Start(@"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\Mantra.MFS100.Test.exe");
                         this.Hide();
-                        FingerprintData fpdForm = new FingerprintData(aadharNo);
+                        FingerprintData fpdForm = new FingerprintData(aadharNo,this.fingerprintCodeList);
                         fpdForm.ShowDialog();
                         this.Close();
                         mfs100.Kill();

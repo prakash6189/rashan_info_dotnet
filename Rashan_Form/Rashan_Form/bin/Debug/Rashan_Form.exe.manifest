@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rashan_Form.exe" size="32768">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rashan_Form.exe" size="34304">
       <assemblyIdentity name="Rashan_Form" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>JzmYsaEZFXQmZ2vGPZhhjSddELs8MGjdFkQTBaZg2nA=</dsig:DigestValue>
+        <dsig:DigestValue>KC2kI1X7k/uXtiueBaPUMsI9VI/7qF631KTLLCdMbKo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -21,14 +21,16 @@ namespace Rashan_Form
         private DBConnect dbConnect;
         private string aadharNo;
         private List<object> fingerprintCodeList;
-        public FingerprintData(string aadharNo)
+
+        public FingerprintData(string aadharNo,List<object> fingerprintCodeList)
         {
             InitializeComponent();
 
             this.aadharNo = aadharNo;
             this.dbConnect = new DBConnect();
             this.Text = this.aadharNo + " Add Fingerprint";
-            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 10", "Fingerprint_Code");
+            this.fingerprintCodeList = fingerprintCodeList;
+            
 
             button1.Text = "Capture (" + fingerprintCodeList[0].ToString().ToUpper() + ")";
             button2.Text = "Capture (" + fingerprintCodeList[1].ToString().ToUpper() + ")";
