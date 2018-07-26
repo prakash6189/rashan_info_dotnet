@@ -24,6 +24,7 @@ namespace Rashan_Form
         public AddNew(string passcode, object[] displayAreaCodeList,List<object> fingerprintCodeList)
         {
             InitializeComponent();
+            this.passcode = passcode;
             this.dbConnect = new DBConnect();
             this.displayAreaCodeList = displayAreaCodeList;
             this.fingerprintCodeList = fingerprintCodeList;
