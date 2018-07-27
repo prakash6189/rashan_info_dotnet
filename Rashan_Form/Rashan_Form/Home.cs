@@ -27,11 +27,23 @@ namespace Rashan_Form
 
         private void Home_Load(object sender, EventArgs e)
         {
+
+            buttonAndLabelEnabled(false);
+
             this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 10", "Fingerprint_Code");
+            button1.Text = "(" + this.fingerprintCodeList[0].ToString().ToUpper() + ")";
+            button2.Text = "(" + this.fingerprintCodeList[1].ToString().ToUpper() + ")";
+            button3.Text = "(" + this.fingerprintCodeList[2].ToString().ToUpper() + ")";
+            button4.Text = "(" + this.fingerprintCodeList[3].ToString().ToUpper() + ")";
+            button5.Text = "(" + this.fingerprintCodeList[4].ToString().ToUpper() + ")";
+
+
+
             rbtnAadharNo.Checked = false;
             txtAadharNo.Enabled = false;
             rbtnRegNo.Checked = true;
-            cmbSerialNo.Enabled = txtRegistrationNo.Enabled = true;
+            cmbSerialNo.Enabled = false;
+            txtRegistrationNo.Enabled = true;
 
             string macActiveQuery = "SELECT IsActive FROM passcode_information where Passcode='" + this.passcode + "'";
             object activeFlag = this.dbConnect.SelectSingleColumn(macActiveQuery, "IsActive")[0];
@@ -44,7 +56,6 @@ namespace Rashan_Form
                 if (displayAreaCodeList.Length > 0)
                 {
                     cmbDisplayAreaCode.Items.AddRange(displayAreaCodeList);
-                    cmbSerialNo.SelectedIndex = 0;
                     cmbDisplayAreaCode.SelectedIndex = 0;
                 }
                 else
@@ -59,15 +70,24 @@ namespace Rashan_Form
                 this.Close();
             }
         }
+
+        private void buttonAndLabelEnabled(bool enableStatus)
+        {
+            button1.Enabled = button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = enableStatus;
+            label1.Enabled = label2.Enabled = label3.Enabled = label4.Enabled = label5.Enabled = enableStatus;
+
+            label1.Text = label2.Text = label3.Text = label4.Text = label5.Text = String.Empty;
+        }
+
         private void btnAddNew_Click(object sender, EventArgs e)
         {
             AddNew formAddNew = new AddNew(this.passcode, this.displayAreaCodeList, this.fingerprintCodeList);
             formAddNew.ShowDialog();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnSend_Click(object sender, EventArgs e)
         {
-            this.Close();
+
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -83,6 +103,8 @@ namespace Rashan_Form
             {
                 if (regNo == "")
                     MessageBox.Show("Registration No cannot be empty");
+                else if (sNo == "")
+                    MessageBox.Show("S No cannot be empty");
                 else
                 {
                     string fetchQuery = "select a.Aadhar_No from user_information a,"
@@ -122,16 +144,53 @@ namespace Rashan_Form
 
         private void rbtnRegNo_CheckedChanged(object sender, EventArgs e)
         {
-            cmbSerialNo.Enabled = txtRegistrationNo.Enabled = true;
+
+            cmbSerialNo.Enabled = false;
+            txtRegistrationNo.Enabled = true;
             txtAadharNo.Enabled = false;
+            btnFindSerialNo.Enabled = true;
         }
 
         private void rbtnAadharNo_CheckedChanged(object sender, EventArgs e)
         {
 
             txtAadharNo.Enabled = true;
-            cmbSerialNo.Enabled = txtRegistrationNo.Enabled = false;
+            cmbSerialNo.Enabled = false;
+            txtRegistrationNo.Enabled = false;
+            btnFindSerialNo.Enabled = false;
 
+        }
+
+        private void btnFindSerialNo_Click(object sender, EventArgs e)
+        {
+            cmbSerialNo.Items.Clear();
+
+            string displayAreaCode = cmbDisplayAreaCode.SelectedItem?.ToString() ?? "";
+            string regNo = txtRegistrationNo.Text;
+
+            string selectSerialNoQuery = "SELECT a.Serial_No FROM user_information a," +
+                "(select Passcode_Display_Id from passcode_display_mapping where Passcode='" + this.passcode + "' and Display_Area_Code='" + displayAreaCode + "') b " +
+"where a.Passcode_Display_Id = b.Passcode_Display_Id and Registration_No = '" + regNo + "' ";
+
+            object[] serialNo = this.dbConnect.SelectSingleColumn(selectSerialNoQuery, "Serial_No").ToArray();
+            if (serialNo.Length > 0)
+            {
+                cmbSerialNo.Enabled = true;
+                cmbSerialNo.Items.AddRange(serialNo);
+                txtRegistrationNo.Enabled = false;
+                btnFindSerialNo.Enabled = false;
+            }
+            else
+                MessageBox.Show("Record not found");
+
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtAadharNo.Text = String.Empty;
+            txtRegistrationNo.Text = String.Empty;
+            cmbSerialNo.Items.Clear();
         }
     }
 }
