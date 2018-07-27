@@ -118,16 +118,26 @@
             this.cmbSerialNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSerialNo.FormattingEnabled = true;
             this.cmbSerialNo.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"});
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
             this.cmbSerialNo.Location = new System.Drawing.Point(178, 103);
             this.cmbSerialNo.Name = "cmbSerialNo";
             this.cmbSerialNo.Size = new System.Drawing.Size(121, 21);
