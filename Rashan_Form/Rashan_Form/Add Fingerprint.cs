@@ -37,35 +37,15 @@ namespace Rashan_Form
             button3.Text = "Capture (" + fingerprintCodeList[2].ToString().ToUpper() + ")";
             button4.Text = "Capture (" + fingerprintCodeList[3].ToString().ToUpper() + ")";
             button5.Text = "Capture (" + fingerprintCodeList[4].ToString().ToUpper() + ")";
-            button6.Text = "Capture (" + fingerprintCodeList[5].ToString().ToUpper() + ")";
-            button7.Text = "Capture (" + fingerprintCodeList[6].ToString().ToUpper() + ")";
-            button8.Text = "Capture (" + fingerprintCodeList[7].ToString().ToUpper() + ")";
-            button9.Text = "Capture (" + fingerprintCodeList[8].ToString().ToUpper() + ")";
-            button10.Text = "Capture (" + fingerprintCodeList[9].ToString().ToUpper() + ")";
+           
         }
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            bool captureStatus = captureFingerPrint(fingerprintCodeList[9].ToString());
-            if (captureStatus)
-            {
-                label10.Text = "Captured";
-                label10.ForeColor = Color.Blue;
-                button10.Enabled = false;
-            }
-            else
-            {
-                label10.Text = "Please Try Again";
-                label10.ForeColor = Color.Red;
-                button10.Enabled = true;
-            }
-
-        }
+      
 
         private void FingerprintData_Load(object sender, EventArgs e)
         {
-            
-            label1.Text = label2.Text = label3.Text = label4.Text = label5.Text = label6.Text = label7.Text = label9.Text = label8.Text = label10.Text = "";
+
+            label1.Text = label2.Text = label3.Text = label4.Text = label5.Text = String.Empty;
         }
 
 
@@ -191,74 +171,6 @@ namespace Rashan_Form
                 label5.Text = "Please Try Again";
                 label5.ForeColor = Color.Red;
                 button5.Enabled = true;
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            bool captureStatus = captureFingerPrint(fingerprintCodeList[5].ToString());
-            if (captureStatus)
-            {
-                label6.Text = "Captured";
-                label6.ForeColor = Color.Blue;
-                button6.Enabled = false;
-            }
-            else
-            {
-                label6.Text = "Please Try Again";
-                label6.ForeColor = Color.Red;
-                button6.Enabled = true;
-            }
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            bool captureStatus = captureFingerPrint(fingerprintCodeList[6].ToString());
-            if (captureStatus)
-            {
-                label7.Text = "Captured";
-                label7.ForeColor = Color.Blue;
-                button7.Enabled = false;
-            }
-            else
-            {
-                label7.Text = "Please Try Again";
-                label7.ForeColor = Color.Red;
-                button7.Enabled = true;
-            }
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            bool captureStatus = captureFingerPrint(fingerprintCodeList[7].ToString());
-            if (captureStatus)
-            {
-                label8.Text = "Captured";
-                label8.ForeColor = Color.Blue;
-                button8.Enabled = false;
-            }
-            else
-            {
-                label8.Text = "Please Try Again";
-                label8.ForeColor = Color.Red;
-                button8.Enabled = true;
-            }
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            bool captureStatus = captureFingerPrint(fingerprintCodeList[8].ToString());
-            if (captureStatus)
-            {
-                label9.Text = "Captured";
-                label9.ForeColor = Color.Blue;
-                button9.Enabled = false;
-            }
-            else
-            {
-                label9.Text = "Please Try Again";
-                label9.ForeColor = Color.Red;
-                button9.Enabled = true;
             }
         }
 

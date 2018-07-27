@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnAddNew = new System.Windows.Forms.Button();
-            this.btnSend = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
             this.rbtnRegNo = new System.Windows.Forms.RadioButton();
             this.rbtnAadharNo = new System.Windows.Forms.RadioButton();
@@ -64,16 +64,16 @@
             this.btnAddNew.UseVisualStyleBackColor = true;
             this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
             // 
-            // btnSend
+            // btnClose
             // 
-            this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSend.Location = new System.Drawing.Point(133, 189);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 66);
-            this.btnSend.TabIndex = 1;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Location = new System.Drawing.Point(133, 189);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 66);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnFind
             // 
@@ -197,6 +197,7 @@
             // 
             // button5
             // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.Location = new System.Drawing.Point(13, 441);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(195, 36);
@@ -205,6 +206,7 @@
             // 
             // button4
             // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(13, 401);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(195, 34);
@@ -213,6 +215,7 @@
             // 
             // button3
             // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.Location = new System.Drawing.Point(13, 361);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(195, 34);
@@ -221,6 +224,7 @@
             // 
             // button2
             // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(13, 321);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(195, 34);
@@ -229,6 +233,7 @@
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(13, 281);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(195, 34);
@@ -297,7 +302,7 @@
             this.Controls.Add(this.rbtnAadharNo);
             this.Controls.Add(this.rbtnRegNo);
             this.Controls.Add(this.btnFind);
-            this.Controls.Add(this.btnSend);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnAddNew);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -312,7 +317,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnAddNew;
-        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.RadioButton rbtnRegNo;
         private System.Windows.Forms.RadioButton rbtnAadharNo;

@@ -30,7 +30,7 @@ namespace Rashan_Form
 
             buttonAndLabelEnabled(false);
 
-            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 10", "Fingerprint_Code");
+            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 5", "Fingerprint_Code");
             button1.Text = "(" + this.fingerprintCodeList[0].ToString().ToUpper() + ")";
             button2.Text = "(" + this.fingerprintCodeList[1].ToString().ToUpper() + ")";
             button3.Text = "(" + this.fingerprintCodeList[2].ToString().ToUpper() + ")";
@@ -73,10 +73,10 @@ namespace Rashan_Form
 
         private void buttonAndLabelEnabled(bool enableStatus)
         {
-            button1.Enabled = button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = enableStatus;
-            label1.Enabled = label2.Enabled = label3.Enabled = label4.Enabled = label5.Enabled = enableStatus;
-
             label1.Text = label2.Text = label3.Text = label4.Text = label5.Text = String.Empty;
+            button1.Enabled = button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = enableStatus;
+            button1.BackColor = button2.BackColor = button3.BackColor = button4.BackColor = button5.BackColor = SystemColors.Control;
+            //label1.Enabled = label2.Enabled = label3.Enabled = label4.Enabled = label5.Enabled = enableStatus;
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
@@ -85,9 +85,9 @@ namespace Rashan_Form
             formAddNew.ShowDialog();
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -97,6 +97,7 @@ namespace Rashan_Form
             string regNo = txtRegistrationNo.Text;
             string sNo = cmbSerialNo.SelectedItem?.ToString() ?? "";
             string aadharNo = txtAadharNo.Text;
+            Boolean aadharFound = false;
 
 
             if (displayAreaCode != "" && rbtnRegNo.Checked)
@@ -114,7 +115,10 @@ namespace Rashan_Form
 
                     try
                     {
-                        MessageBox.Show(aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString());
+
+                        aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString();
+                        aadharFound = true;
+                        cmbSerialNo.Enabled = false;
                     }
                     catch (ArgumentOutOfRangeException ex) { MessageBox.Show("Record not found"); }
 
@@ -135,16 +139,34 @@ namespace Rashan_Form
 
                     try
                     {
-                        MessageBox.Show(aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString());
+                        aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString();
+                        aadharFound = true;
+                        txtAadharNo.Enabled = false;
                     }
                     catch (ArgumentOutOfRangeException ex) { MessageBox.Show("Record not found"); }
                 }
+            }
+
+            if (aadharFound)
+            {
+                buttonAndLabelEnabled(true);
+                string fetchFingerPrintQuery = "select FingerPrint_Code from rashan_information.aadhar_fingerprint_mapping where Aadhar_No = '" + aadharNo + "'";
+                List<object> aadharFingerPrintCode = this.dbConnect.SelectSingleColumn(fetchFingerPrintQuery, "FingerPrint_Code");
+                if (aadharFingerPrintCode != null)
+                {
+                    
+                    aadharFingerPrintCode.ForEach(x=> {
+                        Control temp = this.Controls["button" + fingerprintCodeList.FindIndex(y => y.ToString().Equals(x.ToString()))];
+                        temp.BackColor = Color.Green;
+                    });
+                }
+
             }
         }
 
         private void rbtnRegNo_CheckedChanged(object sender, EventArgs e)
         {
-
+            buttonAndLabelEnabled(false);
             cmbSerialNo.Enabled = false;
             txtRegistrationNo.Enabled = true;
             txtAadharNo.Enabled = false;
@@ -153,7 +175,7 @@ namespace Rashan_Form
 
         private void rbtnAadharNo_CheckedChanged(object sender, EventArgs e)
         {
-
+            buttonAndLabelEnabled(false);
             txtAadharNo.Enabled = true;
             cmbSerialNo.Enabled = false;
             txtRegistrationNo.Enabled = false;
@@ -191,6 +213,12 @@ namespace Rashan_Form
             txtAadharNo.Text = String.Empty;
             txtRegistrationNo.Text = String.Empty;
             cmbSerialNo.Items.Clear();
+            rbtnRegNo.Checked = true;
+            rbtnAadharNo.Checked = false;
+            txtRegistrationNo.Enabled = true;
+            txtAadharNo.Enabled = false;
+            cmbSerialNo.Enabled = false;
+            buttonAndLabelEnabled(false);
         }
     }
 }
