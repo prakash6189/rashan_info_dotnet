@@ -19,7 +19,7 @@ namespace Rashan_Form
     public partial class Home : Form
     {
         private string passcode;
-        private DBConnect dbConnect;
+        
         private object[] displayAreaCodeList;
         private List<object> fingerprintCodeList;
         private bool aadharFound = false;
@@ -33,7 +33,6 @@ namespace Rashan_Form
         {
             InitializeComponent();
             this.passcode = passcode;
-            this.dbConnect = new DBConnect();
             this.mfs100 = new Process();
             this.mfs100.StartInfo.FileName = @"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\Mantra.MFS100.Test.exe";
         }
@@ -43,13 +42,12 @@ namespace Rashan_Form
 
             buttonAndLabelEnabled(false);
 
-            this.fingerprintCodeList = this.dbConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 5", "Fingerprint_Code");
+            this.fingerprintCodeList = DBConnect.SelectSingleColumn("SELECT Fingerprint_Code FROM fingerprint_data_information limit 5", "Fingerprint_Code");
             button1.Text = "(" + this.fingerprintCodeList[0].ToString().ToUpper() + ")";
             button2.Text = "(" + this.fingerprintCodeList[1].ToString().ToUpper() + ")";
             button3.Text = "(" + this.fingerprintCodeList[2].ToString().ToUpper() + ")";
             button4.Text = "(" + this.fingerprintCodeList[3].ToString().ToUpper() + ")";
             button5.Text = "(" + this.fingerprintCodeList[4].ToString().ToUpper() + ")";
-
 
 
             rbtnAadharNo.Checked = false;
@@ -59,12 +57,12 @@ namespace Rashan_Form
             txtRegistrationNo.Enabled = true;
 
             string macActiveQuery = "SELECT IsActive FROM passcode_information where Passcode='" + this.passcode + "'";
-            object activeFlag = this.dbConnect.SelectSingleColumn(macActiveQuery, "IsActive")[0];
+            object activeFlag = DBConnect.SelectSingleColumn(macActiveQuery, "IsActive")[0];
 
             if (activeFlag.ToString() == "True")
             {
                 string selectDisplayAreaForMacQuery = "SELECT Display_Area_Code FROM passcode_display_mapping WHERE Passcode='" + this.passcode + "'";
-                displayAreaCodeList = this.dbConnect.SelectSingleColumn(selectDisplayAreaForMacQuery, "Display_Area_Code").ToArray();
+                displayAreaCodeList = DBConnect.SelectSingleColumn(selectDisplayAreaForMacQuery, "Display_Area_Code").ToArray();
 
                 if (displayAreaCodeList.Length > 0)
                 {
@@ -132,7 +130,7 @@ namespace Rashan_Form
                     try
                     {
 
-                        aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString();
+                        aadharNo = DBConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString();
                         aadharFound = true;
                         cmbSerialNo.Enabled = false;
                     }
@@ -155,7 +153,7 @@ namespace Rashan_Form
 
                     try
                     {
-                        aadharNo = this.dbConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString();
+                        aadharNo = DBConnect.SelectSingleColumn(fetchQuery, "Aadhar_No")[0].ToString();
                         aadharFound = true;
                         txtAadharNo.Enabled = false;
                     }
@@ -166,8 +164,8 @@ namespace Rashan_Form
             if (aadharFound)
             {
                 buttonAndLabelEnabled(true);
-                string fetchFingerPrintQuery = "select FingerPrint_Code from rashan_information.aadhar_fingerprint_mapping where Aadhar_No = '" + aadharNo + "'";
-                aadharFingerPrintCode = this.dbConnect.SelectSingleColumn(fetchFingerPrintQuery, "FingerPrint_Code");
+                string fetchFingerPrintQuery = "select FingerPrint_Code from aadhar_fingerprint_mapping where Aadhar_No = '" + aadharNo + "'";
+                aadharFingerPrintCode = DBConnect.SelectSingleColumn(fetchFingerPrintQuery, "FingerPrint_Code");
                 if (aadharFingerPrintCode != null)
                 {
 
@@ -212,7 +210,7 @@ namespace Rashan_Form
                 "(select Passcode_Display_Id from passcode_display_mapping where Passcode='" + this.passcode + "' and Display_Area_Code='" + displayAreaCode + "') b " +
 "where a.Passcode_Display_Id = b.Passcode_Display_Id and Registration_No = '" + regNo + "' ";
 
-            object[] serialNo = this.dbConnect.SelectSingleColumn(selectSerialNoQuery, "Serial_No").ToArray();
+            object[] serialNo = DBConnect.SelectSingleColumn(selectSerialNoQuery, "Serial_No").ToArray();
             if (serialNo.Length > 0)
             {
                 cmbSerialNo.Enabled = true;
@@ -389,7 +387,6 @@ namespace Rashan_Form
                 fingerPrintImageQuery = "update aadhar_fingerprint_mapping set Image=@img where Aadhar_No=@aadharNo and Fingerprint_Code=@fingerPrintCode";
             }
 
-
             string filePath = @"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\FingerData";
             string fileName = "FingerImage.bmp";
             string fullPath = Path.Combine(filePath, fileName);
@@ -401,30 +398,35 @@ namespace Rashan_Form
             fileStream.Close();
 
 
-
-            this.dbConnect.connection.Open();
-            MySqlCommand cmd = new MySqlCommand(fingerPrintImageQuery, dbConnect.connection);
-
-
-            cmd.Parameters.Add("@aadharNo", MySqlDbType.VarChar, 255);
-            cmd.Parameters.Add("@fingerPrintCode", MySqlDbType.VarChar, 255);
-            cmd.Parameters.Add("@img", MySqlDbType.Blob);
-
-            cmd.Parameters["@aadharNo"].Value = aNo;
-            cmd.Parameters["@fingerPrintCode"].Value = fpCode;
-            cmd.Parameters["@img"].Value = memoryStream.ToArray();
-
-            if (cmd.ExecuteNonQuery() == 1)
+            bool returnFlag=false;
+            if (DBConnect.OpenConnection())
             {
-                this.dbConnect.connection.Close();
-                return true;
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(fingerPrintImageQuery, DBConnect.connection);
+                    cmd.Parameters.Add("@aadharNo", MySqlDbType.VarChar, 255);
+                    cmd.Parameters.Add("@fingerPrintCode", MySqlDbType.VarChar, 255);
+                    cmd.Parameters.Add("@img", MySqlDbType.Blob);
+
+                    cmd.Parameters["@aadharNo"].Value = aNo;
+                    cmd.Parameters["@fingerPrintCode"].Value = fpCode;
+                    cmd.Parameters["@img"].Value = memoryStream.ToArray();
+
+                    returnFlag = (cmd.ExecuteNonQuery() == 1) ? true : false;
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    DBConnect.CloseConnection();
+                }
             }
-            else
-            {
-                this.dbConnect.connection.Close();
-                return false;
-            }
+            return returnFlag;
 
         }
+
     }
 }

@@ -11,25 +11,27 @@ namespace Rashan_Form
     static class Program
     {
 
-        private static DBConnect dbconnect;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            dbconnect = new DBConnect();
+            DBConnect.Initialize();
             string macAddress = GenericUtils.GetMACAddress();
             string checkMacAddressInDb = "SELECT Passcode FROM passcode_information where Mac_Address='"+macAddress+"' and IsActive=1";
-            List<object> returnArray = dbconnect.SelectSingleColumn(checkMacAddressInDb, "Passcode");
+            List<object> returnArray = DBConnect.SelectSingleColumnProgram(checkMacAddressInDb, "Passcode");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (returnArray.Count > 0)
-                Application.Run(new Home(returnArray[0].ToString()));
-            else
-                Application.Run(new Registration(macAddress));
+            if (returnArray != null)
+            {
+                if (returnArray.Count > 0)
+                    Application.Run(new Home(returnArray[0].ToString()));
+                else
+                    Application.Run(new Registration(macAddress));
+            }
 
 
 

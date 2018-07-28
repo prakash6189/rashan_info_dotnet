@@ -15,14 +15,14 @@ namespace Rashan_Form
     {
         private string passcode;
         private string macAddress;
-        private DBConnect dbconnect;
+        
 
         public Registration(string macAddress)
         {
 
             InitializeComponent();
             this.macAddress = macAddress;
-            this.dbconnect = new DBConnect();
+            
 
         }
 
@@ -30,7 +30,7 @@ namespace Rashan_Form
         {
             this.passcode = txtPasscode.Text;
             string updateMacQuery = "UPDATE passcode_information SET Mac_Address = '"+this.macAddress+"' WHERE Passcode = '"+ this.passcode + "' and IsActive=1 and (Mac_Address is null or Mac_Address='')";
-            bool updateFlag = this.dbconnect.Update(updateMacQuery);
+            bool updateFlag = DBConnect.Update(updateMacQuery);
             if(updateFlag)
             {
                 this.Hide();

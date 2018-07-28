@@ -18,14 +18,15 @@ namespace Rashan_Form
     public partial class AddNew : Form
     {
         private string passcode;
-        private DBConnect dbConnect;
+        
         private object[] displayAreaCodeList;
         private List<object> fingerprintCodeList;
+        
         public AddNew(string passcode, object[] displayAreaCodeList,List<object> fingerprintCodeList)
         {
             InitializeComponent();
             this.passcode = passcode;
-            this.dbConnect = new DBConnect();
+            
             this.displayAreaCodeList = displayAreaCodeList;
             this.fingerprintCodeList = fingerprintCodeList;
         }
@@ -43,9 +44,7 @@ namespace Rashan_Form
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
-
-
+           
             string displayAreaCode = cmbDisplayAreaCode.SelectedItem?.ToString() ?? "";
             string regNo = txtRegistrationNo.Text;
             string sNo = cmbSerialNo.SelectedItem?.ToString() ?? "";
@@ -62,10 +61,10 @@ namespace Rashan_Form
             {
 
                 string passcodeDisplayIdSelectQuery = string.Format("select Passcode_Display_Id from passcode_display_mapping where Passcode='{0}' and Display_Area_Code='{1}'", this.passcode, displayAreaCode);
-                string passcodeDisplayId = this.dbConnect.SelectSingleColumn(passcodeDisplayIdSelectQuery, "Passcode_Display_Id").ElementAt(0).ToString();
+                string passcodeDisplayId = DBConnect.SelectSingleColumn(passcodeDisplayIdSelectQuery, "Passcode_Display_Id").ElementAt(0).ToString();
                 string insertUserInformationQuery = string.Format("insert into user_information values('{0}','{1}','{2}','{3}','{4}')", aadharNo, passcodeDisplayId, regNo, sNo, name);
 
-                bool insertFlag = dbConnect.Insert(insertUserInformationQuery);
+                bool insertFlag = DBConnect.Insert(insertUserInformationQuery);
                 if (insertFlag)
                 {
 
@@ -73,13 +72,20 @@ namespace Rashan_Form
                     if (fingerprintDialog == DialogResult.Yes)
                     {
                         Process mfs100 = Process.Start(@"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\Mantra.MFS100.Test.exe");
+                        bool mfs100Started = true;
                         this.Hide();
                         FingerprintData fpdForm = new FingerprintData(aadharNo,this.fingerprintCodeList);
                         fpdForm.ShowDialog();
                         this.Close();
-                        mfs100.Kill();
-                        mfs100.WaitForExit();
-                        mfs100.Dispose();
+                        if (mfs100Started)
+                        {
+                            if (!mfs100.HasExited)
+                            {
+                                mfs100.Kill();
+                                mfs100.WaitForExit();
+                                mfs100.Dispose();
+                            }
+                        }
 
                     }
                     else

@@ -18,7 +18,7 @@ namespace Rashan_Form
     public partial class FingerprintData : Form
     {
 
-        private DBConnect dbConnect;
+        
         private string aadharNo;
         private List<object> fingerprintCodeList;
 
@@ -27,7 +27,7 @@ namespace Rashan_Form
             InitializeComponent();
 
             this.aadharNo = aadharNo;
-            this.dbConnect = new DBConnect();
+            
             this.Text = this.aadharNo + " Add Fingerprint";
             this.fingerprintCodeList = fingerprintCodeList;
             
@@ -61,29 +61,35 @@ namespace Rashan_Form
 
 
             string insertFingerPrintImageQuery = "insert into aadhar_fingerprint_mapping values(@aadharNo,@fingerPrintCode,@img)";
-            this.dbConnect.connection.Open();
-            MySqlCommand cmd = new MySqlCommand(insertFingerPrintImageQuery, dbConnect.connection);
-
-
-            cmd.Parameters.Add("@aadharNo", MySqlDbType.VarChar, 255);
-            cmd.Parameters.Add("@fingerPrintCode", MySqlDbType.VarChar, 255);
-            cmd.Parameters.Add("@img", MySqlDbType.Blob);
-
-            cmd.Parameters["@aadharNo"].Value = this.aadharNo;
-            cmd.Parameters["@fingerPrintCode"].Value = fingerprintCode;
-            cmd.Parameters["@img"].Value = memoryStream.ToArray();
-
-            if (cmd.ExecuteNonQuery() == 1)
+            if (DBConnect.OpenConnection())
             {
-                this.dbConnect.connection.Close();
-                return true;
+                bool returnFlag = false;
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(insertFingerPrintImageQuery, DBConnect.connection);
+
+                    cmd.Parameters.Add("@aadharNo", MySqlDbType.VarChar, 255);
+                    cmd.Parameters.Add("@fingerPrintCode", MySqlDbType.VarChar, 255);
+                    cmd.Parameters.Add("@img", MySqlDbType.Blob);
+
+                    cmd.Parameters["@aadharNo"].Value = this.aadharNo;
+                    cmd.Parameters["@fingerPrintCode"].Value = fingerprintCode;
+                    cmd.Parameters["@img"].Value = memoryStream.ToArray();
+
+                    returnFlag = (cmd.ExecuteNonQuery() == 1) ? true : false;
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    DBConnect.CloseConnection();
+                }
+                return returnFlag;
             }
             else
-            {
-                this.dbConnect.connection.Close();
                 return false;
-            }
-
         }
 
         private void button2_Click(object sender, EventArgs e)
