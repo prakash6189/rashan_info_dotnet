@@ -39,9 +39,6 @@ namespace Rashan_Form
             button5.Text = "Capture (" + fingerprintCodeList[4].ToString().ToUpper() + ")";
            
         }
-
-      
-
         private void FingerprintData_Load(object sender, EventArgs e)
         {
 

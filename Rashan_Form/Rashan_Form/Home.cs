@@ -1,10 +1,14 @@
 ﻿using ConnectCsharpToMysql;
+using MySql.Data.MySqlClient;
 using Rashan_Form.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +22,20 @@ namespace Rashan_Form
         private DBConnect dbConnect;
         private object[] displayAreaCodeList;
         private List<object> fingerprintCodeList;
+        private bool aadharFound = false;
+        private bool editEnable = false;
+        private Process mfs100;
+        private bool mfs100Started = false;
+        private List<object> aadharFingerPrintCode;
+        private string aadharNo;
+
         public Home(string passcode)
         {
             InitializeComponent();
             this.passcode = passcode;
             this.dbConnect = new DBConnect();
+            this.mfs100 = new Process();
+            this.mfs100.StartInfo.FileName = @"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\Mantra.MFS100.Test.exe";
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -85,9 +98,14 @@ namespace Rashan_Form
             formAddNew.ShowDialog();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (aadharFound)
+            {
+                editEnable = true;
+                this.mfs100.Start();
+                this.mfs100Started = true;
+            }
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -96,9 +114,7 @@ namespace Rashan_Form
             string displayAreaCode = cmbDisplayAreaCode.SelectedItem?.ToString() ?? "";
             string regNo = txtRegistrationNo.Text;
             string sNo = cmbSerialNo.SelectedItem?.ToString() ?? "";
-            string aadharNo = txtAadharNo.Text;
-            Boolean aadharFound = false;
-
+            string textAadharNo = txtAadharNo.Text;
 
             if (displayAreaCode != "" && rbtnRegNo.Checked)
             {
@@ -128,14 +144,14 @@ namespace Rashan_Form
             }
             else if (displayAreaCode != "" && rbtnAadharNo.Checked)
             {
-                if (aadharNo == "")
+                if (textAadharNo == "")
                     MessageBox.Show("Aadhar No cannot be empty");
                 else
                 {
                     string fetchQuery = "select a.Aadhar_No from user_information a,"
  + "(select Passcode_Display_Id FROM passcode_display_mapping where Passcode = '" + this.passcode + "' and Display_Area_Code = '" + displayAreaCode + "') b "
      + "where a.Passcode_Display_Id = b.Passcode_Display_Id "
-+ "and a.Aadhar_No = '" + aadharNo + "'";
++ "and a.Aadhar_No = '" + textAadharNo + "'";
 
                     try
                     {
@@ -151,13 +167,15 @@ namespace Rashan_Form
             {
                 buttonAndLabelEnabled(true);
                 string fetchFingerPrintQuery = "select FingerPrint_Code from rashan_information.aadhar_fingerprint_mapping where Aadhar_No = '" + aadharNo + "'";
-                List<object> aadharFingerPrintCode = this.dbConnect.SelectSingleColumn(fetchFingerPrintQuery, "FingerPrint_Code");
+                aadharFingerPrintCode = this.dbConnect.SelectSingleColumn(fetchFingerPrintQuery, "FingerPrint_Code");
                 if (aadharFingerPrintCode != null)
                 {
-                    
-                    aadharFingerPrintCode.ForEach(x=> {
-                        Control temp = this.Controls["button" + fingerprintCodeList.FindIndex(y => y.ToString().Equals(x.ToString()))];
-                        temp.BackColor = Color.Green;
+
+                    aadharFingerPrintCode.ForEach(x =>
+                    {
+                        int number = fingerprintCodeList.FindIndex(y => y.ToString().Equals(x.ToString())) + 1;
+                        Button temp = this.Controls["button" + number] as Button;
+                        temp.BackColor = Color.FromArgb(128, 225, 128);
                     });
                 }
 
@@ -210,15 +228,203 @@ namespace Rashan_Form
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            if (this.mfs100Started)
+            {
+                if (!this.mfs100.HasExited)
+                {
+
+                    this.mfs100.Kill();
+                    this.mfs100.WaitForExit();
+
+                }
+            }
+
+            aadharFound = false;
+            editEnable = false;
             txtAadharNo.Text = String.Empty;
             txtRegistrationNo.Text = String.Empty;
             cmbSerialNo.Items.Clear();
             rbtnRegNo.Checked = true;
+            btnFindSerialNo.Enabled = true;
             rbtnAadharNo.Checked = false;
             txtRegistrationNo.Enabled = true;
             txtAadharNo.Enabled = false;
             cmbSerialNo.Enabled = false;
             buttonAndLabelEnabled(false);
+        }
+        private void Home_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (mfs100Started)
+            {
+                if (!this.mfs100.HasExited)
+                {
+                    this.mfs100.Kill();
+                    this.mfs100.WaitForExit();
+                }
+            }
+            this.mfs100.Dispose();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            label1.Text = String.Empty;
+            if (aadharFound)
+            {
+                if (editEnable)
+                {
+                    bool status = captureFingerPrint(0, aadharNo);
+                    label1.Text = "Captured";
+                    button1.BackColor = Color.FromArgb(128, 255, 128);
+                }
+                else
+                {
+                    MessageBox.Show("Please click edit to capture fingerprint or edit fingerprint");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aadhar Not Found");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            label2.Text = String.Empty;
+            
+            if (aadharFound)
+            {
+                if (editEnable)
+                {
+                    bool status = captureFingerPrint(1, aadharNo);
+                    label2.Text = "Captured";
+                    button2.BackColor = Color.FromArgb(128, 255, 128);
+                }
+                else
+                {
+                    MessageBox.Show("Please click edit to capture fingerprint or edit fingerprint");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aadhar Not Found");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            label3.Text = String.Empty;
+            if (aadharFound)
+            {
+                if (editEnable)
+                {
+                    bool status = captureFingerPrint(2, aadharNo);
+                    label3.Text = "Captured";
+                    button3.BackColor = Color.FromArgb(128, 255, 128);
+                }
+                else
+                {
+                    MessageBox.Show("Please click edit to capture fingerprint or edit fingerprint");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aadhar Not Found");
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            label4.Text = String.Empty;
+            if (aadharFound)
+            {
+                if (editEnable)
+                {
+                    bool status = captureFingerPrint(3, aadharNo);
+                    label4.Text = "Captured";
+                    button4.BackColor = Color.FromArgb(128, 255, 128);
+                }
+                else
+                {
+                    MessageBox.Show("Please click edit to capture fingerprint or edit fingerprint");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aadhar Not Found");
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            label5.Text = String.Empty;
+            if (aadharFound)
+            {
+                if (editEnable)
+                {
+                    bool status = captureFingerPrint(4, aadharNo);
+                    label5.Text = "Captured";
+                    button5.BackColor = Color.FromArgb(128, 255, 128);
+                }
+                else
+                {
+                    MessageBox.Show("Please click edit to capture fingerprint or edit fingerprint");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aadhar Not Found");
+            }
+        }
+
+
+
+        private bool captureFingerPrint(int index, string aNo)
+        {
+            string fpCode = fingerprintCodeList[index].ToString();
+            string fingerPrintImageQuery = "insert into aadhar_fingerprint_mapping values(@aadharNo,@fingerPrintCode,@img)";
+
+            int number = aadharFingerPrintCode.FindIndex(y => y.ToString().Equals(fpCode));
+            if (number >= 0)
+            {
+                fingerPrintImageQuery = "update aadhar_fingerprint_mapping set Image=@img where Aadhar_No=@aadharNo and Fingerprint_Code=@fingerPrintCode";
+            }
+
+
+            string filePath = @"C:\Program Files\Mantra\MFS100\Driver\MFS100Test\FingerData";
+            string fileName = "FingerImage.bmp";
+            string fullPath = Path.Combine(filePath, fileName);
+
+            FileStream fileStream = new FileStream(fullPath, FileMode.Open);
+            Image image = Image.FromStream(fileStream);
+            MemoryStream memoryStream = new MemoryStream();
+            image.Save(memoryStream, ImageFormat.Bmp);
+            fileStream.Close();
+
+
+
+            this.dbConnect.connection.Open();
+            MySqlCommand cmd = new MySqlCommand(fingerPrintImageQuery, dbConnect.connection);
+
+
+            cmd.Parameters.Add("@aadharNo", MySqlDbType.VarChar, 255);
+            cmd.Parameters.Add("@fingerPrintCode", MySqlDbType.VarChar, 255);
+            cmd.Parameters.Add("@img", MySqlDbType.Blob);
+
+            cmd.Parameters["@aadharNo"].Value = aNo;
+            cmd.Parameters["@fingerPrintCode"].Value = fpCode;
+            cmd.Parameters["@img"].Value = memoryStream.ToArray();
+
+            if (cmd.ExecuteNonQuery() == 1)
+            {
+                this.dbConnect.connection.Close();
+                return true;
+            }
+            else
+            {
+                this.dbConnect.connection.Close();
+                return false;
+            }
+
         }
     }
 }
